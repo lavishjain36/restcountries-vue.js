@@ -1,14 +1,11 @@
 <template>
   <div id="app">
-    <h1>Math Quiz App</h1>
-    <OperatorQuiz @onBack="clearOperator" v-if="operator" :operator="operator"/>
-    <OperatorSelector v-if="!operator" @changeOperator="changeOperator"/>
-  </div>
+    <HelloWorld />
+z  </div>
 </template>
 
 <script>
-import OperatorQuiz from "./components/OperatorQuiz.vue";
-import OperatorSelector from "./components/OperatorSelector.vue";
+import HelloWorld from "./components/HelloWorld.vue";
 export default {
   name: "app",
   data() {
@@ -16,15 +13,7 @@ export default {
       operator: null
     };
   },
-  methods:{
-    changeOperator(operator){
-      this.operator = operator;
-    },
-    clearOperator(){
-      this.operator = null;
-    }
-  },
-   components:{OperatorSelector,OperatorQuiz}
+   components:{HelloWorld}
 };
 </script>
 
@@ -38,15 +27,5 @@ export default {
   margin-top: 60px;
   font-size: 24px;
 }
-button {
-  padding: 10px;
-  width: 160px;
-  height: 80px;
-  margin-right: 10px;
-  background-color: #10aeb2;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  vertical-align: top;
-}
+
 </style>
