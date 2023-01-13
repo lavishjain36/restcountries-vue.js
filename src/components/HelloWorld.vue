@@ -1,48 +1,63 @@
 <template>
-<div class="hello">
-  <form action="" @submit.prevent="getWeather">
-    <label for="">Latitude:</label>
-    <input type="text" v-model="latitude" id="latitude" required>
-   <br>
-   <label for="">Longitude</label>
-   <input type="text" v-model="longitude" id="longitude" required>
-   <br>
-   <button type="submit">Get weather</button>
-  </form>
-  <div v-if="weather">
-    <p>Temprature:{{ weather.main.temp }}</p>
-    <p>weather:{{ weather.weather[0].main }}</p>
-    <p>Wind Speed:{{ weather.wind.speed }}</p>
+  <div>
+  <div class="hello" v-if="loading">Loading...</div>
+  <div  v-else-if="error">{{ error }}</div>
+  <div v-else>
+  <table border="2">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Capital</th>
+          <th>Currencies</th>
+          <th>Language</th>
+          <th>Population</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="country in countries" :key="country.name">
+          <td>{{ country.name }}</td>
+          <td>{{ country.capital }}</td>
+           <td>
+            <div v-for="currency in country.currencies" :key="currency.code">
+              {{ currency.name}}-{{ currency.code }}
+            </div> 
+           </td>
+           <td>
+            <div v-for="language in country.languages" :key="language.code">
+              {{ language.name }}
+            </div>
+           </td>
+          
+        </tr>
+      </tbody>
+    </table>
   </div>
-</div>  
-
+</div>
 </template>
-
 <script>
-
+import axios from "axios";
 export default {
   name: 'HelloWorld',
   data(){
     return{
-      latitude:'',
-      longitude:'',
-      weather:null
+      countries:[],
     }
   },
-  methods:{
-    async getWeather(){
-      const url=`https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&appid=9bf59c67c0d408cc5e1c4877f3e4d9d5`;
-      try{
-        const response=await fetch(url);
-        const data=await response.json();
-        console.log(data);
-        this.weather=data;
-      }catch(error) {
-        console.log(error);
-    }
+  mounted(){
+    axios.get('https://restcountries.com/v2/all')
+    .then(response =>{
+      this.countries = response.data;
+      // console.log(response.data);
+     
+    }).catch(error=>{
+      this.error = error.message;
+    })
   }
+ 
+  
+  
 }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -60,5 +75,15 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.hello{
+  background-color: rgb(0, 255, 166);
+}
+.test{
+  background-color: rgb(82, 232, 22);
+  border: 2px solid  coral;
+  width:400px;
+  margin: auto;
 }
 </style>

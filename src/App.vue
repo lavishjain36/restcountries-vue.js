@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HelloWorld />
-z  </div>
+ </div>
 </template>
 
 <script>
@@ -10,7 +10,6 @@ export default {
   name: "app",
   data() {
     return {
-      operator: null
     };
   },
    components:{HelloWorld}
